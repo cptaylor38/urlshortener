@@ -18,24 +18,38 @@ app.get('/', (request, response) => {
 
 const Schema = mongoose.Schema; 
 const shorturlSchema = new Schema({
-    id: { type: String, unique: true}, 
     original: {type: String}, 
     new: {type: String, unique: true}
 })
 
 const NewURL = mongoose.model('shorturl', shorturlSchema) 
 
-app.post('/addurl', (req, res) => {
+app.post('/addurl', async (req, res) => {
     //req.body.url = NewURL.original 
     //need a generator to create new url 
     //need to make sure new url is unique for each document 
     //something about testing injection?
-    //web scrape metadata and add to document for analytics practice
+    //web scrape metadata and add to document for analytics practice   
+    let resdata = [];
+    let rand = Math.random().toString(16).substr(2, 8);  
+    let metadata;
     urlMetadata(req.body.url).then((meta)=> {
-        res.json(meta)
-    })
-    //res.send(NewURL.new)
-})
+        metadata = meta;
+    }) 
+    resdata.push(metadata);
+    try{
+        let data = await NewURL.create({
+            original: req.body.url, 
+            new: rand
+        })   
+        if(data) resdata.push(data) 
+    } 
+    catch(err){ 
+        res.send(err);
+    }
+    
+    res.json(resdata);
+}) 
 
 
 app.listen(PORT, function () {
