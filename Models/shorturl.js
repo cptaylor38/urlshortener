@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const shorturlSchema = new Schema({
     original: {type: String}, 
     new: {type: String, unique: true}, 
-    metadata: {myJsonProperty: JSON.stringify(data)}
 }) 
 
 const ShortURL = mongoose.model('shorturl', shorturlSchema); 

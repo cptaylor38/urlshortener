@@ -1,4 +1,4 @@
-const db = require('../Models') 
+const urlMetadata = require('url-metadata'); 
 
 module.exports = {
     //analytics functions once I figure out what I'm analyzing 

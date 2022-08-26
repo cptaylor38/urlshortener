@@ -4,10 +4,12 @@ module.exports = {
     create: async function(req, res){  
         try{
             let rand = Math.random().toString(16).substr(2, 8); 
+            let metadata = await urlMetadata(req.body.url).then((meta)=> { 
+                return meta;
+            })   
             const urldata = {
-                original: req.body.metadata.url, 
+                original: metadata.url, 
                 new: rand, 
-                metadata: req.body.metadata
             }
             await db.Shorturl.create(urldata).then(obj => res.json(obj))
         } 
