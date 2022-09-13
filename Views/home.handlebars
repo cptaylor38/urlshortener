@@ -1,1 +1,26 @@
-asdfadsf
+<div>
+    <input type="text"> 
+    <button type="button" @click="shorten">Shorten Url</button> 
+    <button type="button" @click="analyze">Analyze Metadata</button>
+</div> 
+
+<script> 
+    async function shorten(e){
+        console.log(e); 
+        try{
+          let data = await axios.post('/url/create', {url: e}).then(data => console.log(data))
+        } 
+        catch(err){
+            console.log(err);
+        }
+    } 
+    async function analyze(e){
+        console.log(e); 
+        try{
+            let data = await axios.post('/metadata', {url: e}).then(data => console.log(data))
+        } 
+        catch(err){
+            console.log(err);
+        }
+    }
+</script>
