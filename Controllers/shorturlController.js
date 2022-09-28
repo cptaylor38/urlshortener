@@ -1,7 +1,8 @@
 const db = require('../Models') 
 
 module.exports = {
-    create: async function(req, res){  
+    create: async function(req, res){   
+        console.log(req);
         try{
             let rand = Math.random().toString(16).substr(2, 8); 
             let metadata = await urlMetadata(req.body.url).then((meta)=> { 
@@ -11,7 +12,10 @@ module.exports = {
                 original: metadata.url, 
                 new: rand, 
             }
-            await db.Shorturl.create(urldata).then(obj => res.json(obj))
+            await db.Shorturl.create(urldata).then(obj => {
+                console.log(obj);
+                res.json(obj)
+            })
         } 
         catch(err){
             res.send(err);

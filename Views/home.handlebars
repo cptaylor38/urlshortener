@@ -1,26 +1,27 @@
-<div>
-    <input type="text"> 
-    <button type="button" @click="shorten">Shorten Url</button> 
-    <button type="button" @click="analyze">Analyze Metadata</button>
+<div style="padding: 3em;">
+    <input type="text" id="urlInput"> 
+    <button type="button" id="shortenClick">Shorten Url</button> 
+    <button type="button" id="analyzeClick">Analyze Metadata</button>
 </div> 
 
 <script> 
-    async function shorten(e){
-        console.log(e); 
+    $('#shortenClick').click(async ()=> {
+        let url = $('#urlInput').val();
         try{
-          let data = await axios.post('/url/create', {url: e}).then(data => console.log(data))
+          let data = await $.post('/url/create', {url}).then(data => console.log('data', data))
         } 
         catch(err){
-            console.log(err);
+            console.log('Shorten unsuccessful.');
         }
-    } 
-    async function analyze(e){
-        console.log(e); 
+    }) 
+
+    $('#analyzeClick').click(async ()=> {
+        let url = $('#urlInput').val();
         try{
-            let data = await axios.post('/metadata', {url: e}).then(data => console.log(data))
+            let data = await $.post('/metadata', {url}).then(data => console.log('data', data))
         } 
         catch(err){
-            console.log(err);
+            console.log('Analyze unsucessful.');
         }
-    }
+    })
 </script>
